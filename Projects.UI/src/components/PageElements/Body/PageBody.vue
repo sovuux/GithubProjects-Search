@@ -105,6 +105,8 @@ const store = useStore()
 
 const pages = ref(0)
 
+const selectedValue = ref(6)
+
 const currentPage = ref(0)
 
 const projectArrayOnPage = ref([])
@@ -113,33 +115,29 @@ const props = defineProps({
   isSearch: {
     type: Boolean,
     default: false
-  },
-  itemsOnPage: {
-    type: Number,
-    default: 6
   }
 })
 
 const getCurrentPage = (num) => {
-  currentPage.value = (Number(num) - 1) * props.itemsOnPage
+  currentPage.value = (Number(num) - 1) * selectedValue.value
 }
 
 const goToNextPage = () => {
-  if (currentPage.value <= store.projects.length - props.itemsOnPage * 2) {
-    currentPage.value += props.itemsOnPage;
+  if (currentPage.value <= store.projects.length - selectedValue.value * 2) {
+    currentPage.value += selectedValue.value;
   }
 }
 
 const goToPrevPage = () => {
   if (currentPage.value > 0) {
-    currentPage.value -= props.itemsOnPage;
+    currentPage.value -= selectedValue.value;
   }
 }
 
 const buttonToggle = (object) => {
-  let index = props.itemsOnPage
+  let index = selectedValue.value
   if (projectArrayOnPage.value.length > 0) {
-    index = Number(currentPage.value) + props.itemsOnPage
+    index = Number(currentPage.value) + selectedValue.value
   }
   projectArrayOnPage.value = object.slice(currentPage.value, index)
 }
@@ -155,7 +153,7 @@ const showItems = computed(() => {
 watch(() => store.projects.length, (countProjects) => {
   store.projects.length = countProjects
   buttonToggle(store.projects)
-  pagination(countProjects , props.itemsOnPage)
+  pagination(countProjects , selectedValue.value)
 })
 
 watch(() => currentPage.value, ()   => {

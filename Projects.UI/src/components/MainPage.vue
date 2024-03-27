@@ -5,7 +5,6 @@
   />
   <PageBody
     :is-search="showSearch"
-    :items-on-page="selectValue"
   />
   <PopupAlert 
     v-if="openModalAlert" 
@@ -20,8 +19,6 @@ import PopupAlert from "@/components/PageElements/Popups/PopupAlert.vue";
 import { ref } from 'vue';
 
 const showSearch = ref(false)
-
-const selectValue = ref(6)
 
 const openModalAlert = ref(false)
 
