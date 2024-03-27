@@ -11,7 +11,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const inputValue = ref()
+const emit = defineEmits(['inputTextChange'])
 
 const props = defineProps({
   placeholderContent: {
@@ -20,7 +20,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['inputTextChange'])
+const inputValue = ref()
 
 const onChange = (event) => {
   const value = event.target.value

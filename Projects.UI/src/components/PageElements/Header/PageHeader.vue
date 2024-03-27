@@ -10,14 +10,11 @@
         @click="searchProjects"
       >
         <template #buttonContent>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="white"
+          <img
+            :src="SearchIcon"
             class="bi bi-search header-container-img"
-            viewBox="0 0 16 16"
+            alt="search"
           >
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-          </svg>
         </template>
       </ButtonBaseComponent>
     </div>
@@ -27,14 +24,15 @@
 <script setup>
 import ButtonBaseComponent from "@/components/BaseComponents/Button/ButtonBaseComponent.vue";
 import InputBaseComponent from "@/components/BaseComponents/Input/InputBaseComponent.vue";
+import SearchIcon from  "@/assets/SvgIcons/Search.svg"
 import { ref } from 'vue';
 import { useStore } from '@/stores/store.js';
+
+const emit = defineEmits(['startSearch', 'openPopupAlert'])
 
 const inputSearchText = ref()
 
 const store = useStore()
-
-const emit = defineEmits(['startSearch', 'openPopupAlert'])
 
 const getInputText = (value) => {
   inputSearchText.value = value

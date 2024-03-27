@@ -10,14 +10,14 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['clickAction'])
+
 const props = defineProps({
   buttonName: {
     type: String,
     default: ""
   }
 })
-
-const emit = defineEmits(['clickAction'])
 </script>
 
 <style lang="scss">

@@ -4,6 +4,7 @@ import ApiQueries from '@/API/api';
 
 export const useStore = defineStore('store', () => {
     const projects = ref([]);
+    const projectsOnPageArray = ref([]);
 
     const foundSubject = async (searchText) => {
         try {
@@ -16,6 +17,7 @@ export const useStore = defineStore('store', () => {
  
     return {
         projects,
+        projectsOnPageArray,
         foundSubject
     };
 });

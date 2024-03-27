@@ -16,11 +16,12 @@
     class="card-container"
   >
     <div
-      v-for="project in showItems"
+      v-for="project in store.projectsOnPageArray"
       :key="project.id"
       class="card-container-section"
     >
       <ProjectCard
+        :project-id="project.id"
         :project-name="project.name"
         :project-url="project.html_url"
         :project-img-url="project.owner ? project.owner.avatar_url : ''"
@@ -29,87 +30,16 @@
         :project-views="project.watchers"
       />
     </div>
-  </div>
-  <div
-    v-if="props.isSearch"
-    class="pagination"
-  >
-    <ButtonBaseComponent
-      class="pagination-arrow"
-      @click-action="goToPrevPage"
-    >
-      <template #buttonContent>
-        <svg
-          class="pagination-arrow-content"
-          viewBox="0 0 227.000000 271.000000"
-        >
-          <g
-            transform="translate(227.000000,0) scale(-0.100000,0.100000)"
-            fill="#000000"
-            stroke="none"
-          >
-            <path
-              d="M647 2353 l-137 -138 432 -432 433 -433 -433 -433 -432 -432 140
-                -140 140 -140 573 573 572 572 -570 570 c-313 313 -572 570 -575 570 -3 0 -67
-              -62 -143 -137z"
-            />
-          </g>
-        </svg>
-      </template>
-    </ButtonBaseComponent>
-    <ButtonBaseComponent
-      v-for="(page, index) in pages"
-      :key="index"
-      class="pagination-button"
-      @click-action="getCurrentPage(page)"
-    >
-      <template #buttonContent>
-        <span class="pagination-button-content">
-          {{ page }}
-        </span>
-      </template>
-    </ButtonBaseComponent>
-    <ButtonBaseComponent
-      class="pagination-arrow"
-      @click-action="goToNextPage"
-    >
-      <template #buttonContent>
-        <svg
-          class="pagination-arrow-content"
-          viewBox="0 0 227.000000 271.000000"
-        >
-          <g
-            transform="translate(0.000000,271.000000) scale(0.100000,-0.100000)"
-            fill="#000000"
-            stroke="none"
-          >
-            <path
-              d="M647 2353 l-137 -138 432 -432 433 -433 -433 -433 -432 -432 140
-                -140 140 -140 573 573 572 572 -570 570 c-313 313 -572 570 -575 570 -3 0 -67
-              -62 -143 -137z"
-            />
-          </g>
-        </svg>
-      </template>
-    </ButtonBaseComponent>
+    <div>
+      <PaginatorPageElement v-if="props.isSearch" />
+    </div>
   </div>
 </template>
 
 <script setup>
-import ProjectCard from "@/components/BaseComponents/Card/ProjectCard.vue";
-import ButtonBaseComponent from "@/components/BaseComponents/Button/ButtonBaseComponent.vue";
-import { useStore } from '@/stores/store.js';
-import { computed, ref, watch } from "vue";
-
-const store = useStore()
-
-const pages = ref(0)
-
-const selectedValue = ref(6)
-
-const currentPage = ref(0)
-
-const projectArrayOnPage = ref([])
+import ProjectCard from "@/components/PageElements/Card/ProjectCard.vue";
+import PaginatorPageElement from "@/components/PageElements/Pagination/PaginatorPageElement.vue";
+import { useStore } from "@/stores/store.js";
 
 const props = defineProps({
   isSearch: {
@@ -118,47 +48,7 @@ const props = defineProps({
   }
 })
 
-const getCurrentPage = (num) => {
-  currentPage.value = (Number(num) - 1) * selectedValue.value
-}
-
-const goToNextPage = () => {
-  if (currentPage.value <= store.projects.length - selectedValue.value * 2) {
-    currentPage.value += selectedValue.value;
-  }
-}
-
-const goToPrevPage = () => {
-  if (currentPage.value > 0) {
-    currentPage.value -= selectedValue.value;
-  }
-}
-
-const buttonToggle = (object) => {
-  let index = selectedValue.value
-  if (projectArrayOnPage.value.length > 0) {
-    index = Number(currentPage.value) + selectedValue.value
-  }
-  projectArrayOnPage.value = object.slice(currentPage.value, index)
-}
-
-const pagination = (count, start) => {
-  pages.value = Number(count) / Number(start)
-}
-
-const showItems = computed(() => {
-  return projectArrayOnPage.value
-})
-
-watch(() => store.projects.length, (countProjects) => {
-  store.projects.length = countProjects
-  buttonToggle(store.projects)
-  pagination(countProjects , selectedValue.value)
-})
-
-watch(() => currentPage.value, ()   => {
-  buttonToggle(store.projects)
-})
+const store = useStore()
 </script>
 
 <style lang="scss">
@@ -195,42 +85,6 @@ watch(() => currentPage.value, ()   => {
   &-img {
     width: 52px;
     height: 52px;
-  }
-}
-
-.pagination {
-    margin-top: 7%;
-    display: flex;
-    justify-content: center;
-
-  &-button {
-    background: white;
-
-    &:focus {
-      background: #00A3FF;
-      color: white;
-    }
-
-    &-content {
-      width: 52px;
-      height: 52px;
-      font-size: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-  }
-
-  &-arrow {
-    background: white;
-    align-items: center;
-    justify-content: center;
-
-    &-content {
-      width: 52px;
-      height: 52px;
-    }
   }
 }
 </style>
