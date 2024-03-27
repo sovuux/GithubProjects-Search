@@ -210,6 +210,7 @@ watch(() => currentPage.value, ()   => {
 
     &:focus {
       background: #00A3FF;
+      color: white;
     }
 
     &-content {
