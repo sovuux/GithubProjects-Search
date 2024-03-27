@@ -13,7 +13,7 @@ export const useStore = defineStore('store', () => {
             console.log(error);
         }
     };
-
+ 
     return {
         projects,
         foundSubject

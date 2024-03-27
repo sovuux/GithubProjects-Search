@@ -31,7 +31,7 @@ const onChange = (event) => {
 
 <style lang="scss">
 .input {
-  width: 1376px;
+  width: 70%;
   height: 68px;
   font-weight: 400;
   font-size: 14px;
