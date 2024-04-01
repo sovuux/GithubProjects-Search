@@ -13,6 +13,7 @@
     "axios": "^1.6.8",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
+    "primevue": "^3.50.0",
     "vue": "^3.4.21",
     "vuejs-paginate-next": "^1.0.2"
   },

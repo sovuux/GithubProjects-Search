@@ -1,46 +1,50 @@
 <template>
   <div class="subject-container">
-    <div
-      class="subject-container-head"
-      @click="openUrl"
+    <a
+      :href="props.projectUrl"
+      target="_blank"
+      class="subject-container-url"
     >
-      <span class="subject-container-head-title">
-        {{ props.projectName }}
-      </span>
-    </div>
-    <div
-      class="subject-container-body"
-      @click="openUrl"
-    >
-      <div class="subject-container-body-author">
-        <img
-          :src="props.projectImgUrl"
-          alt="author"
-          class="subject-container-body-author-img"
-        >
-        <span class="subject-container-body-author-text">
-          {{ props.projectAuthor }}
+      <div
+        class="subject-container-head"
+      >
+        <span class="subject-container-head-title">
+          {{ props.projectName }}
         </span>
       </div>
-      <div class="subject-container-body-notes">
-        <img
-          :src="StarIcon"
-          class="bi bi-star-fill subject-container-body-notes-content-img"
-          alt="star"
-        >
-        <span class="subject-container-body-notes-content-text">
-          {{ props.projectStars }}
-        </span>
-        <img
-          :src="EyeIcon"
-          class="bi bi-eye-fill subject-container-body-notes-content-img"
-          alt="eye"
-        >
-        <span class="subject-container-body-notes-content-text">
-          {{ props.projectViews }}
-        </span>
+      <div
+        class="subject-container-body"
+      >
+        <div class="subject-container-body-author">
+          <img
+            :src="props.projectImgUrl"
+            alt="author"
+            class="subject-container-body-author-img"
+          >
+          <span class="subject-container-body-author-text">
+            {{ props.projectAuthor }}
+          </span>
+        </div>
+        <div class="subject-container-body-notes">
+          <img
+            :src="StarIcon"
+            class="bi bi-star-fill subject-container-body-notes-content-img"
+            alt="star"
+          >
+          <span class="subject-container-body-notes-content-text">
+            {{ props.projectStars }}
+          </span>
+          <img
+            :src="EyeIcon"
+            class="bi bi-eye-fill subject-container-body-notes-content-img"
+            alt="eye"
+          >
+          <span class="subject-container-body-notes-content-text">
+            {{ props.projectViews }}
+          </span>
+        </div>
       </div>
-    </div>
+    </a>
     <div class="subject-container-footer">
       <InputBaseComponent
         :placeholder-content="'Комментарий к проекту'"
@@ -66,7 +70,6 @@ import ButtonBaseComponent from "@/components/BaseComponents/Button/ButtonBaseCo
 import StarIcon from "@/assets/SvgIcons/Star.svg";
 import EyeIcon from "@/assets/SvgIcons/Eye.svg";
 import PencilIcon from "@/assets/SvgIcons/Pencil.svg"
-import { openPageInBrowser } from '@/utilits/OpenPageInBrowser.js'
 import { ref } from "vue";
 
 const props = defineProps({
@@ -116,10 +119,6 @@ const saveComment = () => {
   console.log("Комментарий сохранён")
   //просмотр комментария - console.log(localStorage.getItem('projectComment'))
 }
-
-const openUrl = () => {
-  openPageInBrowser(props.projectUrl)
-}
 </script>
 
 <style lang="scss">
@@ -131,6 +130,11 @@ const openUrl = () => {
   -webkit-box-shadow: 0 5px 5px -5px rgba(34, 60, 80, 0.6);
   -moz-box-shadow: 0 5px 5px -5px rgba(34, 60, 80, 0.6);
   box-shadow: 0 5px 5px -5px rgba(34, 60, 80, 0.6);
+
+  &-url {
+    text-decoration: none;
+    color: black
+  }
 
   &-head {
     margin: 2%;
